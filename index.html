@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Money Manager App</title>
+    <!-- Link to CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Chart.js for bonus feature -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <!-- Main Container -->
+    <div class="container">
+        
+        <!-- Header Section -->
+        <header>
+            <h1>Money Manager</h1>
+            <button id="addTransactionBtn" class="btn btn-primary">Add Transaction</button>
+        </header>
+
+        <!-- Financial Summary Section -->
+        <section class="summary-section">
+            <div class="summary-card income">
+                <h3>Total Income</h3>
+                <p id="totalIncome">$0.00</p>
+            </div>
+            <div class="summary-card expense">
+                <h3>Total Expenses</h3>
+                <p id="totalExpense">$0.00</p>
+            </div>
+            <div class="summary-card balance">
+                <h3>Net Balance</h3>
+                <p id="netBalance">$0.00</p>
+            </div>
+        </section>
+
+        <!-- Filter and Sort Section -->
+        <section class="filter-section">
+            <h3>Filter & Sort</h3>
+            <div class="filter-controls">
+                <!-- Category Filter -->
+                <div class="filter-group">
+                    <label for="filterCategory">Category:</label>
+                    <select id="filterCategory">
+                        <option value="all">All</option>
+                        <option value="income">Income</option>
+                        <option value="expense">Expense</option>
+                    </select>
+                </div>
+
+                <!-- Sub-Category Filter -->
+                <div class="filter-group">
+                    <label for="filterSubCategory">Sub-Category:</label>
+                    <select id="filterSubCategory">
+                        <option value="all">All</option>
+                        <!-- Income Sub-Categories -->
+                        <option value="salary">Salary</option>
+                        <option value="allowances">Allowances</option>
+                        <option value="bonus">Bonus</option>
+                        <option value="petty_cash">Petty Cash</option>
+                        <!-- Expense Sub-Categories -->
+                        <option value="rent">Rent</option>
+                        <option value="food">Food</option>
+                        <option value="shopping">Shopping</option>
+                        <option value="entertainment">Entertainment</option>
+                    </select>
+                </div>
+
+                <!-- Date Range Filter -->
+                <div class="filter-group">
+                    <label for="filterDateFrom">From Date:</label>
+                    <input type="date" id="filterDateFrom">
+                </div>
+
+                <div class="filter-group">
+                    <label for="filterDateTo">To Date:</label>
+                    <input type="date" id="filterDateTo">
+                </div>
+
+                <!-- Sort Options -->
+                <div class="filter-group">
+                    <label for="sortBy">Sort By:</label>
+                    <select id="sortBy">
+                        <option value="date_desc">Date (Newest First)</option>
+                        <option value="date_asc">Date (Oldest First)</option>
+                        <option value="amount_desc">Amount (High to Low)</option>
+                        <option value="amount_asc">Amount (Low to High)</option>
+                    </select>
+                </div>
+
+                <!-- Reset Button -->
+                <button id="resetFiltersBtn" class="btn btn-secondary">Reset</button>
+            </div>
+        </section>
+
+        <!-- Transaction History Table -->
+        <section class="table-section">
+            <h3>Transaction History</h3>
+            <div class="table-container">
+                <table id="transactionTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Category</th>
+                            <th>Sub-Category</th>
+                            <th>Description</th>
+                            <th>Amount</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactionList">
+                        <!-- Transactions will be added here by JavaScript -->
+                    </tbody>
+                </table>
+                <p id="noTransactions" class="no-data">No transactions to display</p>
+            </div>
+        </section>
+
+        <!-- Chart Section (Bonus) -->
+        <section class="chart-section">
+            <h3>Expense Distribution</h3>
+            <div class="chart-container">
+                <canvas id="expenseChart"></canvas>
+            </div>
+        </section>
+
+        <!-- CSV Export Button (Bonus) -->
+        <section class="export-section">
+            <button id="exportCsvBtn" class="btn btn-primary">Download CSV</button>
+        </section>
+
+    </div>
+
+    <!-- Transaction Form Modal -->
+    <div id="transactionModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2 id="modalTitle">Add Transaction</h2>
+            
+            <form id="transactionForm">
+                <!-- Hidden field for editing -->
+                <input type="hidden" id="transactionId">
+
+                <!-- Amount Field -->
+                <div class="form-group">
+                    <label for="amount">Amount *</label>
+                    <input type="number" id="amount" step="0.01" min="0.01" placeholder="Enter amount">
+                    <small class="error-message" id="amountError"></small>
+                </div>
+
+                <!-- Date Field -->
+                <div class="form-group">
+                    <label for="date">Date *</label>
+                    <input type="date" id="date">
+                    <small class="error-message" id="dateError"></small>
+                </div>
+
+                <!-- Category Field (Radio Buttons) -->
+                <div class="form-group">
+                    <label>Category *</label>
+                    <div class="radio-group">
+                        <label>
+                            <input type="radio" name="category" value="income"> Income
+                        </label>
+                        <label>
+                            <input type="radio" name="category" value="expense"> Expense
+                        </label>
+                    </div>
+                    <small class="error-message" id="categoryError"></small>
+                </div>
+
+                <!-- Sub-Category Field (Dropdown) -->
+                <div class="form-group">
+                    <label for="subCategory">Sub-Category *</label>
+                    <select id="subCategory">
+                        <option value="">Select Sub-Category</option>
+                    </select>
+                    <small class="error-message" id="subCategoryError"></small>
+                </div>
+
+                <!-- Description Field -->
+                <div class="form-group">
+                    <label for="description">Description (Optional)</label>
+                    <textarea id="description" maxlength="100" placeholder="Enter description (max 100 chars)"></textarea>
+                    <small class="error-message" id="descriptionError"></small>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary" id="submitBtn">Add Transaction</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>
+
