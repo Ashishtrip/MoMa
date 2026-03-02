@@ -1,91 +1,91 @@
 # Money Manager App - Project Status
 
-## ✅ COMPLETED
+## COMPLETED
 
-### Phase 1: Project Structure Setup ✅
+### Phase 1: Project Structure Setup 
 
-- [x] `index.html` - Main HTML structure
-- [x] `css/styles.css` - Main stylesheet
-- [x] `js/app.js` - Main application entry point
-- [x] `js/models/Transaction.js` - Transaction class (Model)
-- [x] `js/models/TransactionCollection.js` - Collection class for managing transactions
-- [x] `js/views/UIView.js` - View class for DOM manipulation
-- [x] `js/controllers/AppController.js` - Controller for business logic
-- [x] `js/utils/Storage.js` - localStorage utility
-- [x] `js/utils/Validator.js` - Form validation utility
-- [x] `js/utils/ChartManager.js` - Chart.js integration for bonus feature
-- [x] `js/utils/CSVExporter.js` - CSV export utility
+ `index.html` - Main HTML structure
+ `css/styles.css` - Main stylesheet
+ `js/app.js` - Main application entry point
+ `js/models/Transaction.js` - Transaction class (Model)
+ `js/models/TransactionCollection.js` - Collection class for managing transactions
+ `js/views/UIView.js` - View class for DOM manipulation
+ `js/controllers/AppController.js` - Controller for business logic
+ `js/utils/Storage.js` - localStorage utility
+ `js/utils/Validator.js` - Form validation utility
+ `js/utils/ChartManager.js` - Chart.js integration for bonus feature
+ `js/utils/CSVExporter.js` - CSV export utility
 
-### Phase 2: HTML Structure ✅
+### Phase 2: HTML Structure 
 
-- [x] Header with app title and add transaction button
-- [x] Financial Summary Section (Total Income, Total Expenses, Net Balance)
-- [x] Filter & Sort Controls Section
-- [x] Transaction History Table
-- [x] Transaction Form Modal (Add/Edit)
-- [x] Chart Section (Bonus)
-- [x] CSV Export Button (Bonus)
+ Header with app title and add transaction button
+ Financial Summary Section (Total Income, Total Expenses, Net Balance)
+ Filter & Sort Controls Section
+ Transaction History Table
+ Transaction Form Modal (Add/Edit)
+ Chart Section (Bonus)
+ CSV Export Button (Bonus)
 
-### Phase 3: CSS Styling ✅
+### Phase 3: CSS Styling 
 
-- [x] Responsive layout using Flexbox/Grid
-- [x] Color scheme: Green for income, Red for expenses
-- [x] Modal styling for transaction form
-- [x] Table styling with action buttons
-- [x] Form validation styling (error states)
-- [x] Filter/sort controls styling
-- [x] Chart container styling
+ Responsive layout using Flexbox/Grid
+ Color scheme: Green for income, Red for expenses
+ Modal styling for transaction form
+ Table styling with action buttons
+ Form validation styling (error states)
+ Filter/sort controls styling
+ Chart container styling
 
-### Phase 4: JavaScript Implementation ✅
+### Phase 4: JavaScript Implementation 
 
-#### Models ✅
+#### Models 
 
-- [x] `Transaction.js` - Transaction class with properties
-- [x] `TransactionCollection.js` - Array management with CRUD methods
+ `Transaction.js` - Transaction class with properties
+ `TransactionCollection.js` - Array management with CRUD methods
 
-#### Views ✅
+#### Views 
 
-- [x] `UIView.js` - DOM manipulation methods
+ `UIView.js` - DOM manipulation methods
 
-#### Controllers ✅
+#### Controllers 
 
-- [x] `AppController.js` - Main controller connecting Model-View
+ `AppController.js` - Main controller connecting Model-View
 
-#### Utilities ✅
+#### Utilities 
 
-- [x] `Storage.js` - localStorage operations
-- [x] `Validator.js` - Form validation with error handling
-- [x] `ChartManager.js` - Pie chart using Chart.js
-- [x] `CSVExporter.js` - Export transactions to CSV
+ `Storage.js` - localStorage operations
+ `Validator.js` - Form validation with error handling
+ `ChartManager.js` - Pie chart using Chart.js
+ `CSVExporter.js` - Export transactions to CSV
 
-### Phase 5: Core Features ✅
+### Phase 5: Core Features 
 
-- [x] **Create**: Add new transaction with all fields
-- [x] **Read**: Display transactions in table with summary
-- [x] **Update**: Edit existing transaction (pre-fill form)
-- [x] **Delete**: Remove transaction with confirmation
+ **Create**: Add new transaction with all fields
+ **Read**: Display transactions in table with summary
+ **Update**: Edit existing transaction (pre-fill form)
+ **Delete**: Remove transaction with confirmation
 
-### Filter & Sort ✅
+### Filter & Sort 
 
-- [x] Filter by Category (Income/Expense)
-- [x] Filter by Sub-Category
-- [x] Filter by Date Range
-- [x] Sort by Date (Asc/Desc)
-- [x] Sort by Amount (Asc/Desc)
+ Filter by Category (Income/Expense)
+ Filter by Sub-Category
+ Filter by Date Range
+ Sort by Date (Asc/Desc)
+ Sort by Amount (Asc/Desc)
 
-### Form Validations ✅
+### Form Validations 
 
-- [x] Amount: numeric, required, not zero
-- [x] Date: valid, not future date
-- [x] Category: required (radio button)
-- [x] Sub-Category: required (dropdown)
-- [x] Description: optional, max 100 chars
+ Amount: numeric, required, not zero
+ Date: valid, not future date
+ Category: required (radio button)
+ Sub-Category: required (dropdown)
+ Description: optional, max 100 chars
 
-### Phase 6: Bonus Features ✅
+### Phase 6: Bonus Features 
 
-- [x] Pie chart for category-wise expense distribution
-- [x] CSV file download for financial data
-- [x] Run-time exception handling with try-catch
+ Pie chart for category-wise expense distribution
+ CSV file download for financial data
+ Run-time exception handling with try-catch
 
 ---
 
