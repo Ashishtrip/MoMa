@@ -206,15 +206,25 @@
                 this.drawLegend(keys, values);
             }
             drawLegend(keys, values) {
-                this.ctx.fillStyle = '#000000';
+                // Legend styling - Always black background with white text
+                const bgColor = '#000000';
+                const textColor = '#ffffff';
+                const borderColor = '#ffffff';
+
+                // Draw legend box with border
+                this.ctx.fillStyle = bgColor;
                 this.ctx.fillRect(250, 20, 140, keys.length * 25 + 10);
+                this.ctx.strokeStyle = borderColor;
+                this.ctx.lineWidth = 2;
+                this.ctx.strokeRect(250, 20, 140, keys.length * 25 + 10);
+
                 keys.forEach((key, i) => {
                     const minV = Math.min(...values), maxV = Math.max(...values);
                     const color = this.getColor(values[i], minV, maxV);
                     this.ctx.fillStyle = color;
                     this.ctx.fillRect(255, 25 + i * 25, 15, 15);
-                    this.ctx.fillStyle = '#ffffff';
-                    this.ctx.font = '12px Arial';
+                    this.ctx.fillStyle = textColor;
+                    this.ctx.font = 'bold 12px Arial';
                     this.ctx.fillText(`${this.capitalize(key)}: $${values[i].toFixed(2)}`, 275, 36 + i * 25);
                 });
             }
@@ -424,10 +434,21 @@
                     this.collection.getTotalExpenses(),
                     this.collection.getNetBalance()
                 );
+                this.toggleChartVisibility();
                 const data = this.currentChartType === 'expense' ?
                     this.collection.getExpensesByCategory() : this.collection.getIncomeByCategory();
                 if (this.currentChartType === 'expense') this.view.renderExpenseChart(data);
                 else this.view.renderIncomeChart(data);
+            }
+            toggleChartVisibility() {
+                const chartSection = document.querySelector('.chart-section');
+                const totalIncome = this.collection.getTotalIncome();
+                const totalExpenses = this.collection.getTotalExpenses();
+                if (totalIncome > 0 || totalExpenses > 0) {
+                    chartSection.classList.add('active');
+                } else {
+                    chartSection.classList.remove('active');
+                }
             }
         }
 
