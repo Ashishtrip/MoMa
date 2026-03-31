@@ -455,4 +455,4 @@
         // Initialize App
         document.addEventListener('DOMContentLoaded', () => {
             new AppController();
-        });
+        }); 
