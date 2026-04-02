@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoMa Unit Tests</title>
+    <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.20.0.css">
+    <script src="https://code.jquery.com/qunit/qunit-2.20.0.js"></script>
+</head>
+<body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+    <script type="module">
+        import { Transaction } from './js/models/transaction.js';
+        import { TransactionCollection } from './js/models/transaction-collection.js';
+        import { Validator } from './js/utils/validator.js';
+        import { Storage } from './js/models/storage.js';
+
+        QUnit.module('Transaction Model');
+        QUnit.test('creates transaction with correct properties', assert => {
+            const t = new Transaction(100.50, '2024-01-01', 'income', 'salary', 'Test');
+            assert.equal(t.amount, 100.5, 'Amount parsed correctly');
+            assert.equal(t.category, 'income', 'Category set');
+            assert.equal(t.isIncome(), true, 'isIncome() works');
+            assert.equal(t.isExpense(), false, 'isExpense() works');
+        });
+
+        QUnit.test('serializes/deserializes correctly', assert => {
+            const t1 = new Transaction(200, '2024-01-02', 'expense', 'food');
+            const json = t1.toJSON();
+            const t2 = Transaction.fromJSON(json);
+            assert.equal(t2.id, t1.id, 'ID preserved');
+            assert.equal(t2.amount, 200, 'JSON roundtrip works');
+        });
+
+        QUnit.module('TransactionCollection');
+        QUnit.test('CRUD operations', assert => {
+            const coll = new TransactionCollection();
+            const t = coll.addTransaction(300, '2024-01-03', 'income', 'bonus');
+            assert.equal(coll.transactions.length, 1, 'Add works');
+            assert.ok(coll.findById(t.id), 'Find by ID works');
+            coll.deleteTransaction(t.id);
+            assert.equal(coll.transactions.length, 0, 'Delete works');
+        });
+
+        QUnit.test('stats calculations', assert => {
+            const coll = new TransactionCollection();
+            coll.addTransaction(500, '2024-01-01', 'income', 'salary');
+            coll.addTransaction(100, '2024-01-02', 'expense', 'food');
+            assert.equal(coll.getTotalIncome(), 500, 'Total income');
+            assert.equal(coll.getTotalExpenses(), 100, 'Total expenses');
+            assert.equal(coll.getNetBalance(), 400, 'Net balance');
+        });
+
+        QUnit.test('filter and sort', assert => {
+            const coll = new TransactionCollection();
+            coll.addTransaction(100, '2024-01-01', 'income', 'salary');
+            coll.addTransaction(200, '2024-01-02', 'expense', 'food');
+            let filtered = coll.filterTransactions('income', 'all', '', '');
+            assert.equal(filtered.length, 1, 'Category filter');
+            let sorted = coll.sortTransactions(coll.transactions, 'amount_desc');
+            assert.equal(sorted[0].amount, 200, 'Sort by amount desc');
+        });
+
+        QUnit.module('Validator');
+        QUnit.test('form validation', assert => {
+            const errors = Validator.validateForm('', '2024-01-01', '', '', '');
+            assert.ok(errors.amount, 'Invalid amount');
+            assert.ok(errors.category, 'Missing category');
+            const validErrors = Validator.validateForm('100', '2024-01-01', 'income', 'salary', 'test');
+            assert.equal(Object.keys(validErrors).length, 0, 'Valid form no errors');
+        });
+
+        QUnit.module('Storage');
+        QUnit.test('localStorage roundtrip', assert => {
+            const data = [{id:1, amount:100}];
+            Storage.save(data);
+            const loaded = Storage.load();
+            assert.deepEqual(loaded, data, 'Save/load works');
+        });
+    </script>
+</body>
+</html>
