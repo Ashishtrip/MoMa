@@ -16,8 +16,7 @@ MoMa/
 │   ├── utils/ (Validator, CSVExporter, ChartManager)
 │   ├── views/ (UIView)
 │   └── controllers/ (AppController)
-├── tests.html (unit tests)
-└── TODO.md
+└── tests.html (unit tests)
 ```
 
 ## Features (Enhanced)
