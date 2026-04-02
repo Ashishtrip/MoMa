@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MoMa - Money Manager</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
+    <script type="module" src="js/app.js" defer></script>
 </head>
 <body>
     <div class="container">
         <header>
             <h1>MoMa</h1>
-            <button id="addTransactionBtn" class="btn btn-primary">Add Transaction</button>
+            <button id="addTransactionBtn" class="btn btn-primary" aria-label="Add new transaction">Add Transaction</button>
         </header>
         <section class="summary-section">
             <div class="summary-card income">
@@ -32,7 +32,7 @@
             <div class="filter-controls">
                 <div class="filter-group">
                     <label for="filterCategory">Category:</label>
-                    <select id="filterCategory">
+                    <select id="filterCategory" aria-label="Filter by category">
                         <option value="all">All</option>
                         <option value="income">Income</option>
                         <option value="expense">Expense</option>
@@ -40,103 +40,103 @@
                 </div>
                 <div class="filter-group">
                     <label for="filterSubCategory">Sub-Category:</label>
-                    <select id="filterSubCategory">
+                    <select id="filterSubCategory" aria-label="Filter by sub-category">
                         <option value="all">All</option>
                     </select>
                 </div>
                 <div class="filter-group">
                     <label for="filterDateFrom">From Date:</label>
-                    <input type="date" id="filterDateFrom">
+                    <input type="date" id="filterDateFrom" aria-label="Filter from date">
                 </div>
                 <div class="filter-group">
                     <label for="filterDateTo">To Date:</label>
-                    <input type="date" id="filterDateTo">
+                    <input type="date" id="filterDateTo" aria-label="Filter to date">
                 </div>
                 <div class="filter-group">
                     <label for="sortBy">Sort By:</label>
-                    <select id="sortBy">
+                    <select id="sortBy" aria-label="Sort transactions">
                         <option value="date_desc">Date (Newest First)</option>
                         <option value="date_asc">Date (Oldest First)</option>
                         <option value="amount_desc">Amount (High to Low)</option>
-                        <option value="amount_asc">Amount (Low to High)</option>
+                        <option value="amount Asc">Amount (Low to High)</option>
                     </select>
                 </div>
-                <button id="resetFiltersBtn" class="btn btn-secondary">Reset</button>
+                <button id="resetFiltersBtn" class="btn btn-secondary" aria-label="Reset all filters">Reset</button>
             </div>
         </section>
         <section class="table-section">
             <h3>Transaction History</h3>
             <div class="table-container">
-                <table id="transactionTable">
+                <table id="transactionTable" aria-label="Transaction history table">
                     <thead>
                         <tr>
-                            <th>Date</th>
-                            <th>Category</th>
-                            <th>Sub-Category</th>
-                            <th>Description</th>
-                            <th>Amount</th>
-                            <th>Actions</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Sub-Category</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="transactionList"></tbody>
+                    <tbody id="transactionList" aria-live="polite"></tbody>
                 </table>
-                <p id="noTransactions" class="no-data">No transactions to display</p>
+                <p id="noTransactions" class="no-data" aria-live="polite">No transactions to display</p>
             </div>
         </section>
         <section class="chart-section">
             <div class="chart-header">
                 <h3>Distribution by Category</h3>
                 <div class="chart-toggle">
-                    <button id="expenseToggleBtn" class="toggle-btn active">Expenses</button>
-                    <button id="incomeToggleBtn" class="toggle-btn">Income</button>
+                    <button id="expenseToggleBtn" class="toggle-btn active" aria-label="Show expense chart">Expenses</button>
+                    <button id="incomeToggleBtn" class="toggle-btn" aria-label="Show income chart">Income</button>
                 </div>
             </div>
             <div class="chart-container">
-                <canvas id="expenseChart" width="400" height="400"></canvas>
+                <canvas id="expenseChart" width="400" height="400" aria-label="Pie chart of category distribution"></canvas>
             </div>
         </section>
         <section class="export-section">
-            <button id="exportCsvBtn" class="btn btn-primary">Download CSV</button>
+            <button id="exportCsvBtn" class="btn btn-primary" aria-label="Export transactions to CSV">Download CSV</button>
         </section>
     </div>
-    <div id="transactionModal" class="modal">
+    <div id="transactionModal" class="modal" role="dialog" aria-labelledby="modalTitle" aria-modal="true" aria-hidden="true">
         <div class="modal-content">
-            <span class="close-btn">&times;</span>
+            <span class="close-btn" aria-label="Close modal">&times;</span>
             <h2 id="modalTitle">Add Transaction</h2>
             <form id="transactionForm">
                 <input type="hidden" id="transactionId">
                 <div class="form-group">
                     <label for="amount">Amount *</label>
-                    <input type="number" id="amount" step="0.01" min="0.01" placeholder="Enter amount">
+                    <input type="number" id="amount" step="0.01" min="0.01" placeholder="Enter amount" aria-describedby="amountError" required>
                     <small class="error-message" id="amountError"></small>
                 </div>
                 <div class="form-group">
                     <label for="date">Date *</label>
-                    <input type="date" id="date">
+                    <input type="date" id="date" aria-describedby="dateError" required>
                     <small class="error-message" id="dateError"></small>
                 </div>
                 <div class="form-group">
                     <label>Category *</label>
-                    <div class="radio-group">
+                    <div class="radio-group" role="radiogroup" aria-labelledby="categoryLabel">
                         <label>
-                            <input type="radio" name="category" value="income"> Income
+                            <input type="radio" name="category" value="income" id="cat-income" aria-describedby="categoryError" required> Income
                         </label>
                         <label>
-                            <input type="radio" name="category" value="expense"> Expense
+                            <input type="radio" name="category" value="expense" id="cat-expense" aria-describedby="categoryError" required> Expense
                         </label>
                     </div>
                     <small class="error-message" id="categoryError"></small>
                 </div>
                 <div class="form-group">
                     <label for="subCategory">Sub-Category *</label>
-                    <select id="subCategory">
+                    <select id="subCategory" aria-describedby="subCategoryError" required>
                         <option value="">Select Sub-Category</option>
                     </select>
                     <small class="error-message" id="subCategoryError"></small>
                 </div>
                 <div class="form-group">
                     <label for="description">Description (Optional)</label>
-                    <textarea id="description" maxlength="100" placeholder="Enter description (max 100 chars)"></textarea>
+                    <textarea id="description" maxlength="100" placeholder="Enter description (max 100 chars)" aria-describedby="descriptionError"></textarea>
                     <small class="error-message" id="descriptionError"></small>
                 </div>
                 <button type="submit" class="btn btn-primary" id="submitBtn">Add Transaction</button>
