@@ -605,6 +605,49 @@ tbody tr:hover {
 }
 
 /* Responsive Design - Dark Mode */
+/* NEW Step 3: Delete toast styles */
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #ff6b6b;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    display: none;
+    align-items: center;
+    gap: 10px;
+    z-index: 2000;
+    animation: toastSlide 0.3s ease-out;
+    font-weight: bold;
+}
+
+.toast.show {
+    display: flex;
+}
+
+@keyframes toastSlide {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* Accessibility: Focus styles */
+*:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+}
+
+.btn:focus-visible {
+    outline-color: #000000;
+}
+
+/* NEW: Toast button small */
+.toast .btn {
+    padding: 5px 10px;
+    font-size: 14px;
+}
+
 @media (max-width: 768px) {
     .container {
         padding: 10px;
